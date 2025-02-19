@@ -1,0 +1,92 @@
+---
+title: Mock HTTP request in Java & Kotlin
+date: '2025-02-20'
+tags: ['java', 'test']
+draft: false
+summary: Use MockWebServer to mock HTTP request in Java & Kotlin
+---
+
+
+# Mock HTTP request in Java & Kotlin
+
+There are times that we need to mock a HTTP request in our Java test. In this post, I am going to give you a way on how to do it.
+
+
+# MockWebServer
+
+[MockWebServer](https://mvnrepository.com/artifact/com.squareup.okhttp3/mockwebserver) it's a project created by Square that its avaliable for Kotlin an Java. In this example we are going to use Java. 
+
+## Add dependencies 
+
+We will be using maven. Add the following dependency to your `pom.xml` file.
+
+```xml
+    <dependency>  
+	    <groupId>com.squareup.okhttp3</groupId>
+	    <artifactId>mockwebserver</artifactId>  
+	    <version>5.0.0-alpha.14</version>  
+	    <scope>test</scope>  
+    </dependency>
+```
+
+Also for the test we will use JUnit5.
+
+
+## Create a basic Service
+
+Let's create a basic service that will make a request to a server. 
+
+```java
+    private final WebClient webClient;
+
+    public MyService() {
+        this.webClient =  WebClient.create();
+    }
+
+    public String get(String url) {
+        return webClient.get()
+                .uri(url)
+                .retrieve()
+                .bodyToMono(String.class)
+                .block();
+    }
+```
+
+## Create a test
+
+Now let's create a test that will mock the server response.
+
+```java
+    public static final String RESPONSE = "This is mock response";
+    private MockWebServer mockServer;
+
+    private MyService service;
+
+    @BeforeEach
+    void setUp() throws IOException {
+        this.service = new MyService();
+        mockServer = new MockWebServer();
+        mockServer.start();
+    }
+
+    @AfterEach
+    void tearDown() throws IOException {
+        mockServer.shutdown();
+    }
+
+    @Test
+    void get(){
+        //GIVEN
+        mockServer.enqueue(new MockResponse().setBody(RESPONSE));
+        HttpUrl baseUrl = mockServer.url("api/chat");
+        //WHEN
+        String result = service.get(baseUrl.toString());
+        //THEN
+        assertEquals(RESPONSE, result);
+    }
+```
+
+
+# Conclusion
+
+MockWebServer is a great tool to mock HTTP request in Java and Kotlin. It's easy to use and it's very powerful. 
