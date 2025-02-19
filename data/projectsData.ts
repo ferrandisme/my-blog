@@ -9,13 +9,13 @@ const projectsData: Project[] = [
   {
     title: 'TODO',
     description: `TODO`,
-    imgSrc: '/static/images/google.png',
+    imgSrc: '/static/images/logo.png',
     href: 'https://www.google.com',
   },
   {
     title: 'TODO',
     description: `TODO`,
-    imgSrc: '/static/images/time-machine.jpg',
+    imgSrc: '/static/images/logo.png',
     href: '/blog/the-time-machine',
   },
 ]
