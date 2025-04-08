@@ -3,38 +3,34 @@ title: Mock HTTP request in Java & Kotlin
 date: '2025-02-20'
 tags: ['java', 'test']
 draft: false
-summary: Use MockWebServer to mock HTTP request in Java & Kotlin
+summary: MockWebServer para simular llamadas HTTP en Java & Kotlin
 ---
+# Simular solicitudes HTTP en Java y Kotlin
 
-
-# Mock HTTP request in Java & Kotlin
-
-There are times that we need to mock a HTTP request in our Java test. In this post, I am going to give you a way on how to do it.
-
+Hay ocasiones en las que necesitamos simular una solicitud HTTP en nuestras pruebas de Java. En este artículo, te mostraré cómo hacerlo.
 
 # MockWebServer
 
-[MockWebServer](https://mvnrepository.com/artifact/com.squareup.okhttp3/mockwebserver) it's a project created by Square that its avaliable for Kotlin an Java. In this example we are going to use Java. 
+[MockWebServer](https://mvnrepository.com/artifact/com.squareup.okhttp3/mockwebserver) es un proyecto creado por Square que está disponible tanto para Kotlin como para Java. En este ejemplo, usaremos Java.
 
-## Add dependencies 
+## Agregar dependencias
 
-We will be using maven. Add the following dependency to your `pom.xml` file.
+Usaremos Maven. Agrega la siguiente dependencia a tu archivo `pom.xml`:
 
 ```xml
     <dependency>  
-	    <groupId>com.squareup.okhttp3</groupId>
-	    <artifactId>mockwebserver</artifactId>  
-	    <version>5.0.0-alpha.14</version>  
-	    <scope>test</scope>  
+        <groupId>com.squareup.okhttp3</groupId>
+        <artifactId>mockwebserver</artifactId>  
+        <version>5.0.0-alpha.14</version>  
+        <scope>test</scope>  
     </dependency>
 ```
 
-Also for the test we will use JUnit5.
+Además, para las pruebas utilizaremos JUnit5.
 
+## Crear un servicio básico
 
-## Create a basic Service
-
-Let's create a basic service that will make a request to a server. 
+Vamos a crear un servicio básico que realizará una solicitud a un servidor.
 
 ```java
     private final WebClient webClient;
@@ -52,12 +48,12 @@ Let's create a basic service that will make a request to a server.
     }
 ```
 
-## Create a test
+## Crear una prueba
 
-Now let's create a test that will mock the server response.
+Ahora vamos a crear una prueba que simulará la respuesta del servidor.
 
 ```java
-    public static final String RESPONSE = "This is mock response";
+    public static final String RESPONSE = "Esta es una respuesta simulada";
     private MockWebServer mockServer;
 
     private MyService service;
@@ -86,7 +82,6 @@ Now let's create a test that will mock the server response.
     }
 ```
 
+# Conclusión
 
-# Conclusion
-
-MockWebServer is a great tool to mock HTTP request in Java and Kotlin. It's easy to use and it's very powerful. 
+MockWebServer es una excelente herramienta para simular solicitudes HTTP en Java y Kotlin. Es fácil de usar y muy poderosa.

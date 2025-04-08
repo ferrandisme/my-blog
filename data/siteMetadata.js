@@ -2,9 +2,9 @@
 const siteMetadata = {
   title: 'Adrian Ferrandis',
   author: 'Adrian Ferrandis',
-  headerTitle: 'Adrian Ferrandis Blog',
-  description: 'A blog about software development and other things',
-  language: 'en-us',
+  headerTitle: 'Blog de Adrian Ferrandis',
+  description: 'Blog para hablar de software y otros asuntos',
+  language: 'es-ES',
   theme: 'system', // system, dark or light
   siteUrl: 'https://blog.ferrandis.me',
   siteRepo: 'https://github.com/ferrandisme/my-blog',
@@ -22,7 +22,7 @@ const siteMetadata = {
   //instagram: 'https://www.instagram.com',
   //medium: 'https://medium.com',
   //bluesky: 'https://bsky.app/',
-  locale: 'en-US',
+  locale: 'es-ES',
   // set to true if you want a navbar fixed to the top
   stickyNav: false,
   analytics: {
