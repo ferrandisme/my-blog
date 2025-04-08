@@ -15,8 +15,10 @@ export default function Comments({ slug }: { slug: string }) {
       {loadComments ? (
         <CommentsComponent commentsConfig={siteMetadata.comments} slug={slug} />
       ) : (
-        <>Comentarios deshabilitados en el blog</>
-       // <button onClick={() => setLoadComments(true)}>Cargar </button>
+        <>
+          <>Comentarios deshabilitados en el blog</>
+          {/* <button onClick={() => setLoadComments(true)}>Cargar </button> */}
+        </>
       )}
     </>
   )
