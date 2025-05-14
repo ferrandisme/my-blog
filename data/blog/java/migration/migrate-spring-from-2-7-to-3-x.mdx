@@ -1,0 +1,114 @@
+---
+title: 'Migrar de Spring Boot 2.7 a 3.x'
+date: '2025-05-14'
+tags: ['java', 'spring', 'migration', 'spring-boot', 'jakarta']
+draft: false
+summary: 'Guía completa para migrar de Spring Boot 2.7 a 3.x, abordando prerrequisitos, herramientas y pasos detallados para una transición exitosa.'
+---
+
+# Migrar de Spring Boot 2.0 a Spring Boot 3.4
+
+Spring Boot 3 es una mejora significativa, ya que nos introduce grandes mejoras en aspectos como el rendimiento o la seguridad. También trae cambios como el de paquetería entre javax y jakarta. Vamos analizar las distintas partes del proceso de migración.
+
+Usaremos comandos que nos pueden ahorrar horas de trabajo en cambios, para tratar de hacer la migración lo más sencilla posible. Además de unos pasos sencillos de seguir para poder abordar la migración de la forma más sencilla posible.
+
+# Prerrequisitos
+
+Existen ciertos puntos que debemos abordar antes de empezar a migrar nuestra aplicación:
+
+### Java 17
+
+Spring Boot 3 tiene como requisito mínimo Java 17, por tanto deberemos comenzar por subir la versión del JDK a esta como mínimo. Aunque es interesante acabar usando Java 21 junto a Spring Boot 3, ya que nos permitirá utilizar una sintaxis más variada además de poder utilizar los conocidos [virtual threads](https://spring.io/blog/2022/10/11/embracing-virtual-threads).
+
+### Spring Boot 2.7
+
+Lo siguiente que debemos hacer es subir a la última versión de Spring Boot 2, en este caso será la versión 2.7. También es aconsejable eliminar todas las dependencias que estén puestas explícitamente y que puedan ser manejadas de forma automática por Spring Boot.
+
+Este paso puede resultar crítico dependiendo de las distintas dependencias de cada proyecto. Es aconsejable consultar las diferentes guías de migración que nos proporcione cada dependencia para poder abordarlo correctamente.
+
+Normalmente se realiza este paso de forma manual, pero podéis utilizar los migradores automáticos. Os proporcionamos a continuación una lista de recetas de migración de algunas versiones:
+
+[Migrar a Spring Boot 2.0](https://docs.openrewrite.org/recipes/java/spring/boot2/upgradespringboot_2_0)  
+[Migrar a Spring Boot 2.1](https://docs.openrewrite.org/recipes/java/spring/boot2/upgradespringboot_2_1)  
+[Migrar a Spring Boot 2.2](https://docs.openrewrite.org/recipes/java/spring/boot2/upgradespringboot_2_2)  
+[Migrar a Spring Boot 2.3](https://docs.openrewrite.org/recipes/java/spring/boot2/upgradespringboot_2_3)  
+[Migrar a Spring Boot 2.4](https://docs.openrewrite.org/recipes/java/spring/boot2/upgradespringboot_2_4)  
+[Migrar a Spring Boot 2.5](https://docs.openrewrite.org/recipes/java/spring/boot2/upgradespringboot_2_5)  
+[Migrar a Spring Boot 2.6](https://docs.openrewrite.org/recipes/java/spring/boot2/upgradespringboot_2_6)  
+[Migrar a Spring Boot 2.7](https://docs.openrewrite.org/recipes/java/spring/boot2/upgradespringboot_2_7)
+
+Se utilice o no el migrador, recomendamos que se revise el listado de cambios de cada versión o la ayuda de migración en caso de existir, para poder ir mitigando los problemas de forma escalonada y sencilla.
+
+En caso de que necesitéis otras recetas de interés para cambios en estas versiones, podéis consultar todas las recetas disponibles para Spring Boot 2 [aquí](https://docs.openrewrite.org/recipes/java/spring/boot2).
+
+### Spring Security 6
+
+El último prerrequisito necesario será actualizar la versión de Spring Security, en caso de estar utilizándolo en el proyecto. Esto se debe a que Spring Boot 3 no es compatible con la versión 5\. Por suerte desde Spring nos proporcionan información sobre cómo [prepararnos para la migración](https://docs.spring.io/spring-security/reference/5.8/migration/index.html) y cómo [migrar a Spring Security 6](https://docs.spring.io/spring-security/reference/6.0/migration/index.html). Lo primero que deberemos hacer es migrar a Spring Boot 5.8 siguiendo la primera guía, ya que esta versión viene preparada para que la migración a la versión 6 sea más sencilla. Una vez realizado este paso, seguiremos lo especificado en el segundo enlace para finalizar esta migración.
+
+### Comprobar que esté todo listo para empezar
+
+Antes de saltar a SpringBoot 3.0, comprueba que todo en tu aplicación funciona igual que funcionaba antes de subir a Spring Boot 2.7. También es importante **revisar todos los “deprecated”**, ya que esto puede dejar de existir en Spring Boot 3\. Guarda también tus cambios con tu sistema de control de versiones, ya que esto te ayudará a poder volver atrás entre las distintas versiones, ya que seguramente vayas afrontando distintas dificultades.
+
+# Spring Boot 3.0
+
+Estamos preparados para comenzar a migrar. Aquí utilizaremos el migrador de [Open Rewrite](https://docs.openrewrite.org/recipes/java/spring/boot3). No obstante, existen otras alternativas:
+
+- [Proyecto de Spring Boot Migrator](https://github.com/spring-projects-experimental/spring-boot-migrator)
+- [Herramientas de IntelliJ](https://blog.jetbrains.com/idea/2021/06/intellij-idea-eap-6/)
+
+Adicionalmente, si queréis hacer los cambios de esta versión a mano, existen la guía de migración en [github](https://github.com/spring-projects/spring-boot/wiki/Spring-Boot-3.0-Migration-Guide#upgrade-to-spring-boot-3) y otro artículo de [Baeldung](https://www.baeldung.com/spring-boot-3-migration) que explica como realizarlo. Recomendamos lanzar el migrador automático de OpenRewrite y una vez finalice revisar ambas guías por si necesitamos realizar algún ajuste adicional.
+
+Procederemos a lanzar la siguiente [receta](https://docs.openrewrite.org/recipes/java/spring/boot3/upgradespringboot_3_0) de OpenRewrite por terminal:
+
+`mvn -U org.openrewrite.maven:rewrite-maven-plugin:run -Drewrite.recipeArtifactCoordinates=org.openrewrite.recipe:rewrite-spring:RELEASE -Drewrite.activeRecipes=org.openrewrite.java.spring.boot3.UpgradeSpringBoot_3_0 -Drewrite.exportDatatables=true`
+
+Este proceso puede llevar un tiempo, ya que realizará bastantes cambios. Una vez finalice, seguramente nos encontraremos con errores de compilación. Los abordaremos posteriormente, pero primero debemos realizar otras comprobaciones.
+
+**Lo primero que debemos comprobar es que los cambios realizados con el migrador, especialmente en las dependencias, sean correctos**. A continuación, detallamos algunos problemas que pueden ocurrir en la migración:
+
+**CXF**: Esta dependencia tiene [problemas](https://issues.apache.org/jira/browse/CXF-8671?src=confmacro) en las versiones Jakarta 10\. Estos problemas han sido solucionados recientemente en la versión 4.1 y posteriores.
+
+**Propiedades:** Es interesante siempre lanzar el [migrador de propiedades](https://github.com/spring-projects/spring-boot/wiki/Spring-Boot-3.0-Migration-Guide#configuration-properties-migration), ya que nos permitirá solucionar problemas con estas de forma automática
+
+**Spring Batch:** Si utilizáis Spring Batch en vuestro proyecto, este ha sufrido bastantes cambios. Recomendamos seguir la [guía de migración de Spring Batch](https://github.com/spring-projects/spring-batch/wiki/Spring-Batch-5.0-Migration-Guide) para poder solucionar los problemas.
+
+**Otros problemas:** El migrador soluciona los casos más comunes, pero es posible que cometa errores o que no sepa abordarlos correctamente. Normalmente dependen mucho del proyecto y de las librerías que uséis. La mejor forma de abordar esto es consultar las guías de [migración generales](https://github.com/spring-projects/spring-boot/wiki/Spring-Boot-3.0-Migration-Guide) o de esas dependencias en concreto. También os recomiendo [este](https://sendoh-daten.medium.com/the-issues-i-encounter-when-migrating-spring-boot-from-2-x-to-3-x-including-spring-security-e8572851287b) artículo de medium con algunos problemas.
+
+Posteriormente seguiremos el siguiente proceso:
+
+1. Revisar los cambios realizados por el automigrador, especialmente en las dependencias para ver que son correctos.
+2. En caso de que no esté modificado el parent pom, modificarlo a la versión correspondiente de Spring Boot. Lo mismo aplica para el JDK
+3. Solucionar los errores de compilación en el código de producción
+4. Conseguir que la aplicación se pueda ejecutar (que arranque correctamente)
+5. Solucionar los problemas de compilación en test
+6. Comprobar que la aplicación funciona correctamente
+
+Estos pasos son básicos pero imprescindibles. Debemos seguirlos en cada versión que vayamos subiendo.
+
+# Spring Boot 3.1
+
+Recomendamos seguir utilizando la [receta](https://docs.openrewrite.org/recipes/java/spring/boot3/upgradespringboot_3_1) de migración de openrewrite, aunque como hemos comentado anteriormente existen otras opciones.
+
+Aquí encontraremos otros problemas, algunos relacionados con aspectos que ya estaban deprecated o que no eran recomendables de la versión anterior. [Aquí](https://github.com/spring-projects/spring-boot/wiki/Spring-Boot-3.1-Release-Notes) tenemos el listado de cambios de Springboot 3.1 para saber que debemos migrar.
+
+Esta versión será más sencilla de subir que las anteriores, los problemas que puedan ocurrir dependen de las distintas dependencias que podáis tener. Mi recomendación personal es que si no lo habéis hecho en las versiones anteriores, elimineis todas las versiones fijadas de las dependencias que ya son manejadas automáticamente por spring, para permitir que se vayan actualizando automáticamente a la versión adecuada. También es recomendable subir todas las dependencias que tengamos después de esto a las últimas versiones compatibles con nuestro software.
+
+# Spring Boot 3.2
+
+Volveremos a aplicar la [receta](https://docs.openrewrite.org/recipes/java/spring/boot3/upgradespringboot_3_2) de migración. A partir de esta versión y las siguientes debería ser más sencillo. Si encontramos problemas serán muy específicos de nuestro caso y deberemos referirnos a las guías de migración correspondientes. Os dejo también la [guía](https://github.com/spring-projects/spring-boot/wiki/Spring-Boot-3.2-Release-Notes) con los cambios.
+
+# Spring Boot 3.3
+
+Os vuelvo a dejar la [receta](https://docs.openrewrite.org/recipes/java/spring/boot3/upgradespringboot_3_3) de migración y los [cambios](https://github.com/spring-projects/spring-boot/wiki/Spring-Boot-3.3-Release-Notes) de la versión.
+
+# Spring Boot 3.4
+
+De nuevo, os dejo la [receta](https://docs.openrewrite.org/recipes/java/spring/boot3/upgradespringboot_3_4) y los [cambios](https://github.com/spring-projects/spring-boot/wiki/Spring-Boot-3.4-Release-Notes).
+
+# Conclusión
+
+Migrar a Spring Boot 3.x, como hemos explorado, presenta desafíos iniciales, especialmente al cumplir con prerrequisitos como Java 17 y la actualización a Spring Boot 2.7. Sin embargo, herramientas como OpenRewrite simplifican significativamente el proceso para las actualizaciones incrementales posteriores. Es crucial recordar que cada aplicación es única; por lo tanto, revisa tu configuración específica y consulta las guías de migración de las librerías que utilices.
+
+Haber completado esta migración es un gran paso. Para evitar futuras migraciones complejas, te recomendamos encarecidamente mantener tu aplicación actualizada con las últimas versiones estables. Esto no solo te facilitará futuras actualizaciones, sino que también te permitirá beneficiarte de las últimas mejoras en rendimiento y seguridad.
+
+Si encuentras alguna cosa que podamos añadir para hacer la guía más completa hazmelo saber y lo añadiré al artículo.
