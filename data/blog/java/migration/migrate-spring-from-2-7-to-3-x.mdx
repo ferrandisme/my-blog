@@ -1,5 +1,5 @@
 ---
-title: 'Migrar de Spring Boot 2.7 a 3.x'
+title: 'Migrar de Spring Boot 2.0 a 3.x'
 date: '2025-05-14'
 tags: ['java', 'spring', 'migration', 'spring-boot', 'jakarta']
 draft: false
@@ -8,7 +8,7 @@ summary: 'Guía completa para migrar de Spring Boot 2.7 a 3.x, abordando prerreq
 
 # Migrar de Spring Boot 2.0 a Spring Boot 3.4
 
-Spring Boot 3 es una mejora significativa, ya que nos introduce grandes mejoras en aspectos como el rendimiento o la seguridad. También trae cambios como el de paquetería entre javax y jakarta. Vamos analizar las distintas partes del proceso de migración.
+Spring Boot 3 es una mejora significativa, ya que nos introduce grandes mejoras en aspectos como el rendimiento o la seguridad. También trae cambios como el de paquetería entre javax y jakarta. Vamos a analizar las distintas partes del proceso de migración.
 
 Usaremos comandos que nos pueden ahorrar horas de trabajo en cambios, para tratar de hacer la migración lo más sencilla posible. Además de unos pasos sencillos de seguir para poder abordar la migración de la forma más sencilla posible.
 
@@ -43,7 +43,7 @@ En caso de que necesitéis otras recetas de interés para cambios en estas versi
 
 ### Spring Security 6
 
-El último prerrequisito necesario será actualizar la versión de Spring Security, en caso de estar utilizándolo en el proyecto. Esto se debe a que Spring Boot 3 no es compatible con la versión 5\. Por suerte desde Spring nos proporcionan información sobre cómo [prepararnos para la migración](https://docs.spring.io/spring-security/reference/5.8/migration/index.html) y cómo [migrar a Spring Security 6](https://docs.spring.io/spring-security/reference/6.0/migration/index.html). Lo primero que deberemos hacer es migrar a Spring Boot 5.8 siguiendo la primera guía, ya que esta versión viene preparada para que la migración a la versión 6 sea más sencilla. Una vez realizado este paso, seguiremos lo especificado en el segundo enlace para finalizar esta migración.
+El último prerrequisito necesario será actualizar la versión de Spring Security, en caso de estar utilizándolo en el proyecto. Esto se debe a que Spring Boot 3 no es compatible con la versión 5\. Por suerte desde Spring nos proporcionan información sobre cómo [prepararnos para la migración](https://docs.spring.io/spring-security/reference/5.8/migration/index.html) y cómo [migrar a Spring Security 6](https://docs.spring.io/spring-security/reference/6.0/migration/index.html). Lo primero que deberemos hacer es migrar a Spring Security 5.8 siguiendo la primera guía, ya que esta versión viene preparada para que la migración a la versión 6 sea más sencilla. Una vez realizado este paso, seguiremos lo especificado en el segundo enlace para finalizar esta migración.
 
 ### Comprobar que esté todo listo para empezar
 
@@ -91,7 +91,7 @@ Recomendamos seguir utilizando la [receta](https://docs.openrewrite.org/recipes/
 
 Aquí encontraremos otros problemas, algunos relacionados con aspectos que ya estaban deprecated o que no eran recomendables de la versión anterior. [Aquí](https://github.com/spring-projects/spring-boot/wiki/Spring-Boot-3.1-Release-Notes) tenemos el listado de cambios de Springboot 3.1 para saber que debemos migrar.
 
-Esta versión será más sencilla de subir que las anteriores, los problemas que puedan ocurrir dependen de las distintas dependencias que podáis tener. Mi recomendación personal es que si no lo habéis hecho en las versiones anteriores, elimineis todas las versiones fijadas de las dependencias que ya son manejadas automáticamente por spring, para permitir que se vayan actualizando automáticamente a la versión adecuada. También es recomendable subir todas las dependencias que tengamos después de esto a las últimas versiones compatibles con nuestro software.
+Esta versión será más sencilla de subir que las anteriores, los problemas que puedan ocurrir dependen de las distintas dependencias que podáis tener. Mi recomendación personal es que si no lo habéis hecho en las versiones anteriores, eliminéis todas las versiones fijadas de las dependencias que ya son manejadas automáticamente por spring, para permitir que se vayan actualizando automáticamente a la versión adecuada. También es recomendable subir todas las dependencias que tengamos después de esto a las últimas versiones compatibles con nuestro software.
 
 # Spring Boot 3.2
 
