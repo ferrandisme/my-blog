@@ -1,4 +1,8 @@
 {
-  "java": 1,
+  "java": 2,
+  "spring": 1,
+  "migration": 1,
+  "spring-boot": 1,
+  "jakarta": 1,
   "test": 1
 }
