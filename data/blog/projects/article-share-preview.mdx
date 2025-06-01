@@ -1,0 +1,197 @@
+---
+title: 'ArticlesShare: Plataforma para Compartir Conocimiento'
+date: '2025-06-05'
+tags: ['ArticlesShare', 'typescript', 'nextjs', 'project']
+summary: 'ArticlesShare es una plataforma colaborativa diseñada para que los equipos compartan, descubran y comenten artículos de manera organizada, con características como búsqueda avanzada, notificaciones y resúmenes semanales.'
+images: '/static/images/2025-06/articles-share-post-preview.png'
+---
+
+## 🌟 Introducción
+
+Hoy quiero compartir con vosotros mi más reciente proyecto: ArticlesShare, una plataforma que nació de la necesidad de centralizar y compartir conocimiento dentro de equipos de trabajo. En este artículo, describiré cómo he creado esta herramienta, las características principales, los desafíos que enfrenté y hacia dónde se dirige el proyecto.
+
+## 💡 ¿Qué es ArticlesShare?
+
+ArticlesShare es una aplicación web que permite a los equipos compartir, descubrir y comentar artículos interesantes. Mediante esta herramienta podemos compartir artículos entre los equipos de forma organizada, ya que incluye herramientas como un buscador o un envio de correos electrónicos.
+
+![Imagen de portada de ArticlesShare](/static/images/2025-06/articles-share-main-image.png)
+
+## ✨ Características principales
+
+### 1️⃣ Compartir y descubrir artículos
+
+**El corazón de la plataforma es la capacidad de compartir artículos con tu equipo**. Cada artículo incluye:
+
+- Título descriptivo
+- URL al contenido original
+- Descripción para contextualizar por qué es relevante
+- Etiquetas para clasificar y facilitar la búsqueda
+
+Todo esto puede personalizarse en la creación y editarse posteriormente en la edición.
+
+<img
+  src="/static/images/2025-06/articles-share-article-edit-form.png"
+  alt="Imagen de la edición de un artículo"
+  width="75%"
+/>
+
+### 2️⃣ Sistema de comentarios enriquecido
+
+Es importante ampliar el conocimiento más allá del texto inicial. Por ello, **cada artículo tiene su propia sección de comentarios** donde los miembros del equipo pueden discutir su contenido utilizando texto enriquecido (negritas, cursivas, listas, etc.).
+
+![Imagen de comentarios en un artículo](/static/images/2025-06/articles-share-comments.png)
+
+Adicionalmente, antes de entrar a un artículo podemos ver cuántos comentarios tiene este
+
+### 3️⃣ Búsqueda avanzada
+
+Encontrar contenido relevante es fundamental, por eso implementé un sistema de búsqueda que permite filtrar por distintos campos. Por ejemplo:
+
+- Texto en títulos y descripciones
+- Etiquetas/Tags específicos
+- Equipo de trabajo
+
+### 4️⃣ Notificaciones
+
+Para mantener a todos al día, la plataforma incluye un **sistema de notificaciones** que alerta a los usuarios cuando:
+
+- Alguien comenta en un artículo que has compartido
+- Alguien comenta en un artículo donde has comentado
+
+Esta aparece visualmente al entrar a la web
+
+### 5️⃣ Newsletter
+
+Una de las características más apreciadas es el **envío automático de resúmenes semanales**. El sistema:
+
+1. Recopila todos los artículos compartidos durante la semana
+2. Genera un documento bien formateado
+3. Genera una URL que permite ver los últimos artículos de esa semana en la web
+4. Lo comparte vía correo electrónico y Google Drive
+
+Además, el correo te permite acceder a ambos enlaces, ver cuántos artículos nuevos hay esa semana y desuscribirte del envio semanal.
+
+![Imagen Ejemplo de resumen semanal](/static/images/2025-06/articles-share-mail.jpeg)
+
+### 6️⃣ Perfiles de usuario
+
+Cada miembro tiene su propio perfil donde puede:
+
+- Ver los artículos que ha compartido
+- Editar o eliminar sus propias contribuciones
+- Copiar los artículos en un formato amigable para compartirlo en otras plataformas
+
+![Imagen Perfil de usuario](/static/images/2025-06/articles-share-profile.png)
+
+### 7️⃣ Panel de administración
+
+Contamos con un panel de administración desde el cual podemos:
+
+- Tener una gestión total de nuestros usuarios, pudiendo verlos, crear, editar, borrar, etc.
+
+![Imagen Panel administración de usuarios](/static/images/2025-06/articles-share-admin-users.png)
+
+- Mandar correos electrónicos. Además de la newsletter, esta herramienta nos permite crear comunicaciones de forma sencilla.
+
+Primero seleccionamos a quien queremos enviar el correo:
+
+![Imagen Panel administración elegir usuarios correo](/static/images/2025-06/articles-share-admin-mail1.png)
+
+Luego utilizamos un sistema de plantillas interactivo 'drag and drop'. Ahí podremos personalizar estilos, textos, formato, etc.
+
+![Imagen Panel administración crear plantilla correo](/static/images/2025-06/articles-share-admin-mail2.png)
+
+## 🧩 El proceso de desarrollo
+
+### Inspiración y planificación
+
+Todo comenzó a partir de una base de un proyecto que tenía previamente para compartir prompts. Este proyecto lo desarrollé siguiendo un tutorial de Youtube. El proyecto original tenía ciertos problemas a resolver a mejorar. El trabajo inicial fue mejorar estas "tareas pendientes" y enfocarse en transformar lo que era una demo en el primer MVP de los artículos. **La primera version la desarrollé en un dia de mucho trabajo pero de gran satisfacción personal**
+
+### Elección tecnológica
+
+La decisión de utilizar Next.js fue clave: quería una solución que me permitiera desarrollar tanto el frontend como el backend integrados, con un buen rendimiento y flexibilidad. Además, era una tecnología que ya conocía y de la cual tenía la base comentada en el punto anterior. Complementé esto:
+
+- TailwindCSS para un diseño adaptable y elegante
+- MongoDB para almacenar la mayoría de los datos (usuarios, artículos, ...)
+- Redis para el sistema de comentarios (mayor velocidad y flexibilidad)
+- Supabase para el sistema de notificaciones (Queria algo separado para este sistema)
+- Sendgrid para el envío de correos
+
+Además, me he apoyado fuertemente en Copilot para ayudarme en el desarrollo del producto
+
+##### Desarrollo iterativo
+
+Adopté un enfoque incremental, comenzando por las funciones esenciales:
+
+- Sistema de autenticación
+- CRUD básico para artículos
+- Sistema de búsqueda
+
+Y posteriormente implementando otras como:
+
+- Comentarios
+- Notificaciones
+- Sistema de resúmenes semanales
+- Migración a typescript
+- Panel de administración
+- Gestión de suscripción al newsletter
+- Mejoras visuales (como placeholders mientras carga el contenido)
+
+**En cada fase, probé la funcionalidad con usuarios reales para obtener retroalimentación temprana. Poder ver cómo tu proyecto crece y la gente lo utiliza produce cierto entusiasmo.**
+
+#### 🔥 Desafíos enfrentados
+
+Optimización de búsquedas
+Uno de los mayores retos fue crear un sistema de búsqueda que fuera tanto eficiente como flexible. Los usuarios necesitaban resultados rápidos incluso con una base de datos en crecimiento. La solución fue implementar:
+
+- Búsqueda indexada
+- Filtrado por etiquetas optimizado
+- Resultados en tiempo real con carga progresiva (paginación)
+- Utilizar distintas bases de datos para reducir cargas
+
+##### Generación y distribución de documentos
+
+Automatizar la creación de resúmenes semanales fue particularmente desafiante. Requirió:
+
+- Recopilar artículos con sus metadatos
+- Generar documentos bien formateados
+- Integrar con Google Drive para compartir
+- Conseguir que el correo supere los requisitos de los distintos proveedores de correo
+
+Para este último apartado, tuve que utilizar un servicio de correo externo. Gracias a esto y configurar mi propio dominio (además de elaborar una buena plantilla de correo) he conseguido cumplir este objetivo.
+
+#### 🚀 Trabajo futuro
+
+ArticlesShare sigue siendo un proyecto en evolución. Tengo ideas apuntadas en las que quiero seguir trabajando. Al final, el proyecto no deja de estar en prerelease y tiene camino por recorrer.
+
+## 📊 Impacto y resultados
+
+Desde su implementación, ArticlesShare ha:
+
+- Centralizado mas de cien de artículos que sin el estarian dispersos
+- Reducido el tiempo para encontrar información relevante
+- Permitido enriquecer el contenido mediante un sistema de comentarios
+- Simplificado la divulgación de contenido mediante sus distintas utilidades, como el newsletter.
+
+Gracias a este proyecto se ha podido ayudar a ampliar la formación y el conocimiento de las personas.
+
+## 💰 Costes del proyecto
+
+He conseguido que todo me cueste 0€ al mes, unicamente mi esfuerzo (pero no el de mi cartera). Todos los alojamientos que utilizo son gratuitos. Esto incluye:
+
+- Hosting web
+- 3 bases de datos
+- Servicio de mail
+- Archivos en la nube
+
+## 🤖 El impacto de la IA
+
+He utilizado ampliamente la IA para desarrollar este producto. La base original está programada sin IA pero a partir de ahi se ha ido utilizando para construir nuevas funcionalidades. Aunque esta lejos de poder hacer todo por mi, si que he notado como algunas veces yo tenía mas un rol de especificador/supervisor mas que de programador. Todo depende de la tarea, pero en las de menor complejidad si que he notado como podia desenvolverse bastante bien.
+
+De momento no me preocupa que me remplace ya que la veo muy dependiente de mi. Si os interesa esto hare otro post al respecto en el blog.
+
+## 🏁 Conclusión
+
+ArticlesShare comenzó como una solución a un problema específico y ha evolucionado hasta convertirse en una herramienta interesante para compartir conocimiento. El camino no ha sido sencillo, pero cada problema que he tenido que afrontar me ha hecho aprender mas.
+
+Sin duda, espero poder seguir compartiendo con vosotros más información de este proyecto

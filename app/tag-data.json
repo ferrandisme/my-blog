@@ -1,8 +1,10 @@
 {
+  "articlesshare": 1,
+  "typescript": 1,
+  "nextjs": 1,
+  "project": 1,
   "java": 2,
   "spring": 1,
   "migration": 1,
-  "spring-boot": 1,
-  "jakarta": 1,
   "test": 1
 }
